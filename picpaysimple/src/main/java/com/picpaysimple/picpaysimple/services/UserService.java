@@ -4,6 +4,7 @@ import com.picpaysimple.picpaysimple.domain.user.User;
 import com.picpaysimple.picpaysimple.domain.user.UserType;
 import com.picpaysimple.picpaysimple.exception.InsufficientBalanceException;
 import com.picpaysimple.picpaysimple.exception.MerchantTransactionNotAllowedException;
+import com.picpaysimple.picpaysimple.exception.UserNotFoundException;
 import com.picpaysimple.picpaysimple.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
-public class UserServices {
+public class UserService {
 
     @Autowired
     private final UserRepository userRepository;
@@ -25,8 +26,15 @@ public class UserServices {
         if(sender.getBalance().compareTo(amount) < 0){
             throw new InsufficientBalanceException("insufficient balance");
         }
-
     }
 
+    public User findUserById(Long id){
+        return this.userRepository.findUserById(id).orElseThrow(()
+                -> new UserNotFoundException("User not found"));
+    }
+
+    public void saveUser(User user){
+        this.userRepository.save(user);
+    }
 
 }
