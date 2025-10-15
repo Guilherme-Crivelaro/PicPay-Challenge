@@ -22,7 +22,7 @@ public class User {
     private String firstName;
     private String lastName;
     @Column(unique = true)
-    private String document;
+    private String documents;
     @Column(unique = true)
     private String email;
     private String password;
@@ -34,7 +34,7 @@ public class User {
     public User(UserDTO userDTO){
         this.firstName = userDTO.firstName();
         this.lastName = userDTO.lastName();
-        this.document = userDTO.document();
+        this.documents = userDTO.document();
         this.email = userDTO.email();
         this.password = userDTO.password();
         this.balance = userDTO.balance();
